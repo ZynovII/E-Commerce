@@ -1,0 +1,23 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "fullstack app",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZynovII/E-Commerce.git"
+  },
+  "keywords": [
+    "reactjs",
+    "nestjs"
+  ],
+  "author": "ZynovII <zynov1997@mail.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZynovII/E-Commerce/issues"
+  },
+  "homepage": "https://github.com/ZynovII/E-Commerce#readme"
+}
