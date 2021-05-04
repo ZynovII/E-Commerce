@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/ZynovII/E-Commerce/issues"
   },
-  "homepage": "https://github.com/ZynovII/E-Commerce#readme"
+  "homepage": "https://github.com/ZynovII/E-Commerce#readme",
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  }
 }
