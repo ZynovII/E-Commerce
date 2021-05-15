@@ -22,5 +22,8 @@
   "homepage": "https://github.com/ZynovII/E-Commerce#readme",
   "dependencies": {
     "cross-env": "^7.0.3"
+  },
+  "devDependencies": {
+    "@types/passport-jwt": "^3.0.5"
   }
 }
