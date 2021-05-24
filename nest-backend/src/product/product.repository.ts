@@ -16,7 +16,7 @@ export class ProductRepository extends Repository<ProductEntity> {
 
     if (search) {
       query.andWhere(
-        '(product.name LIKE :search OR product.description LIKE :search)',
+        '(LOWER(product.name) LIKE LOWER(:search) OR LOWER(product.description) LIKE LOWER(:search))',
         { search: `%${search}%` },
       );
     }

@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -31,9 +30,7 @@ export class ProductController {
   }
 
   @Get('/:id')
-  getProductById(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<ProductEntity> {
+  getProductById(@Param('id') id: string): Promise<ProductEntity> {
     return this.productService.getProductById(id);
   }
 
@@ -47,14 +44,14 @@ export class ProductController {
 
   @Patch('/:id/availability')
   updateAvailability(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
     @Body() status: boolean,
   ): Promise<ProductEntity> {
     return this.productService.updateAvailability(id, status);
   }
 
   @Delete('/:id')
-  deleteProduct(@Param('id', ParseIntPipe) id: number): Promise<string> {
+  deleteProduct(@Param('id') id: string): Promise<string> {
     return this.productService.deleteProduct(id);
   }
 }
