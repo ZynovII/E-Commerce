@@ -1,33 +1,34 @@
 import {
-  BaseEntity,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import { UserRoles } from 'src/models/UserRoles';
-import { LayoutThemes } from 'src/models/LayoutThemes';
+import { UserRoles } from 'src/auth/user/models/UserRoles';
+import { LayoutThemes } from 'src/auth/user/models/LayoutThemes';
+import { CartItemEntity } from 'src/cart-item/cart-item.entity';
+import { CartItemService } from 'src/cart-item/cart-item.service';
 
-@Entity()
+@Entity('user')
 @Unique(['email'])
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  // @Column()
-  // firstName: string;
-
-  // @Column()
-  // lastName: string;
-
-  // @Column()
-  // role: UserRoles;
-
-  // @Column({ default: '' })
-  // avatar: string;
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
+
+  @Column()
+  role: UserRoles;
+
+  @Column({ default: '' })
+  avatar: string;
+
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -36,14 +37,14 @@ export class User extends BaseEntity {
   @Column()
   salt: string;
 
-  // @Column()
-  // theme: LayoutThemes;
+  @Column()
+  theme: LayoutThemes;
 
-  // @Column()
-  // allowNotificatin: boolean;
+  @Column()
+  allowNotification: boolean;
 
-  async validatePassword(password: string): Promise<boolean> {
-    const hash = await bcrypt.hash(password, this.salt);
-    return hash === this.password;
-  }
+  @OneToMany((_type) => CartItemEntity, (cartItem) => cartItem.user, {
+    eager: true,
+  })
+  cartItems: CartItemEntity[];
 }

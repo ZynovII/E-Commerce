@@ -1,9 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserRepository } from 'src/auth/user/user.repository';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { JwtPayload } from './jwt-payload.interface';
-import { UserRepository } from './user/user.repository';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -11,14 +12,6 @@ export class AuthService {
     private userRepository: UserRepository,
     private jwtService: JwtService,
   ) {}
-
-  private mockUser = {
-    email: 'fake@fake.fake',
-    token: 'token',
-    firstName: 'Test',
-    lastName: 'Tset',
-    avatar: null,
-  };
 
   signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
     return this.userRepository.signUp(authCredentialsDto);

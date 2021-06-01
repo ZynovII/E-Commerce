@@ -4,21 +4,39 @@ import {
 } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { AuthCredentialsDto } from '../dto/auth-credentials.dto';
 import { User } from './user.entity';
+import { AuthCredentialsDto } from 'src/auth/dto/auth-credentials.dto';
+import { LayoutThemes } from './models/LayoutThemes';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    const { email, password } = authCredentialsDto;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      role,
+      allowNotification,
+      avatar,
+    } = authCredentialsDto;
 
-    const user = new User();
-    user.email = email;
-    user.salt = await bcrypt.genSalt();
-    user.password = await this.hashPassword(password, user.salt);
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = this.create({
+      firstName,
+      lastName,
+      role,
+      email,
+      password: hashedPassword,
+      allowNotification,
+      avatar,
+      theme: LayoutThemes.LIGHT,
+    });
 
     try {
-      await user.save();
+      await this.save(user);
     } catch (err) {
       if (err.code === '23505') {
         //duplicate user
@@ -34,14 +52,10 @@ export class UserRepository extends Repository<User> {
   ): Promise<string> {
     const { email, password } = authCredentialsDto;
     const user = await this.findOne({ email });
-    if (user && (await user.validatePassword(password))) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       return user.email;
     } else {
       return null;
     }
-  }
-
-  private async hashPassword(password: string, salt: string): Promise<string> {
-    return bcrypt.hash(password, salt);
   }
 }

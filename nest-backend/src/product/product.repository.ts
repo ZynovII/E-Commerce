@@ -7,20 +7,17 @@ import { ProductEntity } from './product.entity';
 export class ProductRepository extends Repository<ProductEntity> {
   async getProducts(filterDto: GetProductsFilterDto): Promise<ProductEntity[]> {
     const { isAvailable, search } = filterDto;
-
     const query = this.createQueryBuilder('product');
 
     if (isAvailable) {
       query.andWhere('product.isAvailable = :isAvailable', { isAvailable });
     }
-
     if (search) {
       query.andWhere(
         '(LOWER(product.name) LIKE LOWER(:search) OR LOWER(product.description) LIKE LOWER(:search))',
         { search: `%${search}%` },
       );
     }
-
     const products = await query.getMany();
     return products;
   }
@@ -28,17 +25,29 @@ export class ProductRepository extends Repository<ProductEntity> {
   async createProduct(
     createProductDto: CreateProductDto,
   ): Promise<ProductEntity> {
-    const { name, description, quantity, price } = createProductDto;
-
-    const product: ProductEntity = new ProductEntity();
-    product.name = name;
-    product.description = description;
-    product.quantity = quantity;
-    product.price = price;
-    product.raiting = 0;
-    product.isAvailable = false;
-    await product.save();
-
+    const {
+      name,
+      description,
+      quantity,
+      price,
+      category,
+      params,
+      images,
+      manufacturer,
+    } = createProductDto;
+    const product = this.create({
+      name,
+      description,
+      quantity,
+      price,
+      params,
+      category,
+      manufacturer,
+      images,
+      raiting: 0,
+      isAvailable: false,
+    });
+    await this.save(product);
     return product;
   }
 }

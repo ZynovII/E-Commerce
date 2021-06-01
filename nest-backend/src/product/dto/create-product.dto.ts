@@ -11,4 +11,10 @@ export class CreateProductDto {
 
   @IsNotEmpty()
   price: number;
+
+  //FIXME: add validation
+  manufacturer: string;
+  params: string;
+  images: string;
+  category: string;
 }

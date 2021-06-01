@@ -23,7 +23,5 @@
   "dependencies": {
     "cross-env": "^7.0.3"
   },
-  "devDependencies": {
-    "@types/passport-jwt": "^3.0.5"
-  }
+  "devDependencies": {}
 }
