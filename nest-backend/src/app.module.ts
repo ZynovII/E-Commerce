@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { ManufacturerModule } from './manufacturer/manufacturer.module';
-import { CartItemService } from './cart-item/cart-item.service';
 import { CartItemModule } from './cart-item/cart-item.module';
 
 @Module({
@@ -32,6 +31,6 @@ import { CartItemModule } from './cart-item/cart-item.module';
     CartItemModule,
   ],
   controllers: [],
-  providers: [CartItemService],
+  providers: [],
 })
 export class AppModule {}

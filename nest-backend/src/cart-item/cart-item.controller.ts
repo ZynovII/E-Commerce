@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CartItemEntity } from './cart-item.entity';
 import { CartItemService } from './cart-item.service';
 import { CreateCartItemDto } from './dto/create-cart-item.dto';
 
+@ApiTags('Cart-item')
 @Controller('cart-item')
 export class CartItemController {
   constructor(private cartItemService: CartItemService) {}
@@ -12,7 +14,7 @@ export class CartItemController {
     return this.cartItemService.getCartItemById(id);
   }
 
-  @Put('/:id/quantity')
+  @Patch('/:id/quantity')
   updateQuantity(
     @Param('id') id: string,
     @Body() quantity: number,

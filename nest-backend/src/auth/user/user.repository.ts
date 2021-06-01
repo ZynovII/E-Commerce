@@ -7,10 +7,11 @@ import * as bcrypt from 'bcrypt';
 import { User } from './user.entity';
 import { AuthCredentialsDto } from 'src/auth/dto/auth-credentials.dto';
 import { LayoutThemes } from './models/LayoutThemes';
+import { SignInDto } from '../dto/sign-in.dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
+  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<string> {
     const {
       firstName,
       lastName,
@@ -45,12 +46,11 @@ export class UserRepository extends Repository<User> {
         throw new InternalServerErrorException();
       }
     }
+    return user.email;
   }
 
-  async validatePassword(
-    authCredentialsDto: AuthCredentialsDto,
-  ): Promise<string> {
-    const { email, password } = authCredentialsDto;
+  async validatePassword(signInDto: SignInDto): Promise<string> {
+    const { email, password } = signInDto;
     const user = await this.findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
       return user.email;

@@ -1,7 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ManufacturerEntity } from './manufacturer.entity';
 import { ManufacturerService } from './manufacturer.service';
 
+@ApiTags('Manufacturer')
 @Controller('manufacturer')
 export class ManufacturerController {
   constructor(private manufacturerService: ManufacturerService) {}

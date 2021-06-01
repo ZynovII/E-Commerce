@@ -33,7 +33,6 @@ export class ProductRepository extends Repository<ProductEntity> {
       category,
       params,
       images,
-      manufacturer,
     } = createProductDto;
     const product = this.create({
       name,
@@ -42,7 +41,6 @@ export class ProductRepository extends Repository<ProductEntity> {
       price,
       params,
       category,
-      manufacturer,
       images,
       raiting: 0,
       isAvailable: false,

@@ -12,12 +12,14 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dto/create-product.dto';
 import { GetProductsFilterDto } from './dto/get-products-filter.dto';
 import { UpdateProductAvailabilityDto } from './dto/update-product-availability.dto';
 import { ProductEntity } from './product.entity';
 import { ProductService } from './product.service';
 
+@ApiTags('Product')
 @Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}
